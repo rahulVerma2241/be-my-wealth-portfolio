@@ -16,7 +16,7 @@ public class FinanceUtils {
         long days
     ) {
         // Convert rate to decimal (e.g., 7% -> 0.07)
-        double r = annualRate / 100;
+        double r = annualRate * 0.01;
         double years = (double) days / 365;
         // (1 + r/n)
         double base = 1 + (r / compoundingFrequency);

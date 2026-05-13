@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.arrow.bemywealth.portfolio.cashOfDeposit.data.FixedDepositData;
 import org.arrow.bemywealth.portfolio.cashOfDeposit.dto.FixedDepositDTO;
+import org.arrow.bemywealth.portfolio.cashOfDeposit.dto.FixedDepositSearchDTO;
 import org.arrow.bemywealth.portfolio.cashOfDeposit.mapper.FixedDepositMapper;
 import org.arrow.bemywealth.portfolio.cashOfDeposit.model.FixedDepositModel;
 import org.arrow.bemywealth.portfolio.cashOfDeposit.repository.FixedDepositRepository;
@@ -13,9 +14,11 @@ import org.arrow.bemywealth.portfolio.exception.NoDataFoundException;
 import org.springframework.stereotype.Service;
 
 
+import java.math.BigDecimal;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -24,10 +27,12 @@ public class FixedDepositService {
 
     private FixedDepositRepository fixedDepositRepository;
 
-    public List<FixedDepositDTO> getAllDeposits(String userId) {
+    public FixedDepositSearchDTO getAllDeposits(String userId) {
         final List<FixedDepositModel> fixedDepositDetails = fixedDepositRepository.findAll();
-        return Optional.ofNullable(fixedDepositDetails).orElse(List.of())
-                .stream().map(FixedDepositMapper.INSTANCE::mapFixedDepositModel).toList();
+        final List<FixedDepositDTO> depositDTOS = fixedDepositDetails.stream().map(FixedDepositMapper.INSTANCE::mapFixedDepositModel).toList();
+
+        return new FixedDepositSearchDTO(depositDTOS, fixedDepositDetails.stream().map(FixedDepositModel::getPrincipalAmount).reduce(BigDecimal::add).get(),
+                fixedDepositDetails.stream().map(FixedDepositModel::getPrincipalAmount).reduce(BigDecimal::add).get());
     }
 
     public void saveFixedDeposit(FixedDepositDTO fixedDepositDTO) {
@@ -44,7 +49,7 @@ public class FixedDepositService {
 
     public void deleteFixedDeposit(String fixedDepositId) throws NoDataFoundException {
         log.info("Deleting fixed deposit with id:{}", fixedDepositId);
-        final Optional<FixedDepositModel> depositModel = fixedDepositRepository.findById(fixedDepositId);
+        final Optional<FixedDepositModel> depositModel = fixedDepositRepository.findById(UUID.fromString(fixedDepositId));
         if (depositModel.isPresent()) {
             fixedDepositRepository.delete(depositModel.get());
         }

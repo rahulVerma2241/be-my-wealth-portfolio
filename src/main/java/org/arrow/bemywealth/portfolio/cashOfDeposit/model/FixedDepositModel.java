@@ -19,6 +19,8 @@ public class FixedDepositModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    private String accountNumber;
+
     private String institutionName;
 
     private BigDecimal principalAmount;

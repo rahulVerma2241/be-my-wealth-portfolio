@@ -11,6 +11,8 @@ import java.time.LocalDate;
 @ToString
 public class FixedDepositData {
 
+    private String accountNumber;
+
     private String institutionName;
 
     private BigDecimal principalAmount;
