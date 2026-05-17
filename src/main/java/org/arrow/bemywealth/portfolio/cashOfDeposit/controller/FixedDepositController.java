@@ -42,4 +42,10 @@ public class FixedDepositController {
         fixedDepositService.deleteFixedDeposit(id);
         return ResponseEntity.accepted().build();
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> updateFixedDeposit(@NotNull @RequestBody FixedDepositDTO fixedDepositDTO) {
+        fixedDepositService.updateFixedDeposit(fixedDepositDTO);
+        return ResponseEntity.accepted().build();
+    }
 }
