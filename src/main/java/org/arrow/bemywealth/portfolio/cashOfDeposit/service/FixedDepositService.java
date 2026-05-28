@@ -28,9 +28,10 @@ public class FixedDepositService {
     public FixedDepositSearchDTO getAllDeposits(String userId) {
         final List<FixedDepositModel> fixedDepositDetails = fixedDepositRepository.findAll();
         final List<FixedDepositDTO> depositDTOS = fixedDepositDetails.stream().map(FixedDepositMapper.INSTANCE::mapFixedDepositModel).toList();
-
+        if (depositDTOS.isEmpty())
+            return new FixedDepositSearchDTO(List.of(), BigDecimal.ZERO, BigDecimal.ZERO);
         return new FixedDepositSearchDTO(depositDTOS, fixedDepositDetails.stream().map(FixedDepositModel::getPrincipalAmount).reduce(BigDecimal::add).get(),
-                fixedDepositDetails.stream().map(FixedDepositModel::getPrincipalAmount).reduce(BigDecimal::add).get());
+                fixedDepositDetails.stream().map(FixedDepositModel::getMaturityAmount).reduce(BigDecimal::add).get());
     }
 
     public void saveFixedDeposit(FixedDepositDTO fixedDepositDTO) {

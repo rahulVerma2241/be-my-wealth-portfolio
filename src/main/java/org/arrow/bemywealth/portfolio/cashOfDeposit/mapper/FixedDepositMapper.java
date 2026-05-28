@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Mapper(imports = CompoundingFrequency.class)
 public interface FixedDepositMapper {
@@ -30,7 +31,7 @@ public interface FixedDepositMapper {
     @Named("calculateCurrentAmount")
     default BigDecimal calculateCurrentAmount(FixedDepositDTO  fixedDepositDto) {
         return FinanceUtils.currentAmount(fixedDepositDto.principalAmount(), fixedDepositDto.interestRate().doubleValue(),
-                Integer.parseInt(fixedDepositDto.compoundingFrequency()),
+                Objects.requireNonNull(CompoundingFrequency.findByName(fixedDepositDto.compoundingFrequency())).getFrequency(),
                 fixedDepositDto.openDate());
     }
 
@@ -38,7 +39,7 @@ public interface FixedDepositMapper {
     @Named("calculateMaturityAmount")
     default BigDecimal calculateMaturityAmount(FixedDepositDTO  fixedDepositDTO) {
         return FinanceUtils.calculateMaturity(fixedDepositDTO.principalAmount(), fixedDepositDTO.interestRate().doubleValue(),
-                Integer.parseInt(fixedDepositDTO.compoundingFrequency()), fixedDepositDTO.openDate(), fixedDepositDTO.closeDate());
+                Objects.requireNonNull(CompoundingFrequency.findByName(fixedDepositDTO.compoundingFrequency())).getFrequency(), fixedDepositDTO.openDate(), fixedDepositDTO.closeDate());
     }
 }
 

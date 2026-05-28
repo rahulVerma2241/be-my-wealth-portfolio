@@ -21,7 +21,7 @@ public enum CompoundingFrequency {
 
     public static CompoundingFrequency findByName(String name) {
         for (CompoundingFrequency frequency : values()) {
-            if (frequency.name.equals(name)) {
+            if (frequency.name.equalsIgnoreCase(name)) {
                 return frequency;
             }
         }

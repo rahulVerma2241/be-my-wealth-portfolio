@@ -15,7 +15,7 @@ public class FinanceUtils {
         BigDecimal principal, double annualRate, int compoundingFrequency,
         LocalDate depositDate, LocalDate maturityDate)
     {
-        double years = (double) ChronoUnit.DAYS.between(maturityDate, depositDate) / 365;
+        double years = (double) ChronoUnit.DAYS.between(depositDate, maturityDate) / 365;
         // (1 + r/n)
         double base = 1 + (annualRate * 0.01 / compoundingFrequency);
         // (nt)
@@ -31,7 +31,7 @@ public class FinanceUtils {
     public static BigDecimal currentAmount(BigDecimal principal, double annualRate, int compoundingFrequency, LocalDate depositDate)
     {
 
-        double years = (double) ChronoUnit.DAYS.between(LocalDate.now(), depositDate) / 365;
+        double years = (double) ChronoUnit.DAYS.between(depositDate, LocalDate.now()) / 365;
         double base = 1 + (annualRate * 0.01 / compoundingFrequency);
         // (nt)
         double exponent = compoundingFrequency * years;
