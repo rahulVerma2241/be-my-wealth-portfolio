@@ -40,4 +40,6 @@ public class FixedDepositModel {
     private BigDecimal currentAmount;
 
     private CompoundingFrequency compoundingFrequency;
+
+    private Double taxPercent;
 }

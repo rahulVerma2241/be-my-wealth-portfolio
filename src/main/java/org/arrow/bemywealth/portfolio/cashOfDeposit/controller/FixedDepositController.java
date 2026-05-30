@@ -4,12 +4,14 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.arrow.bemywealth.portfolio.cashOfDeposit.dto.FixedDepositDTO;
 import org.arrow.bemywealth.portfolio.cashOfDeposit.dto.FixedDepositSearchDTO;
+import org.arrow.bemywealth.portfolio.cashOfDeposit.dto.FixedDepositStatementDTO;
 import org.arrow.bemywealth.portfolio.cashOfDeposit.service.FixedDepositService;
+import org.arrow.bemywealth.portfolio.cashOfDeposit.service.FixedDepositStatementService;
 import org.arrow.bemywealth.portfolio.exception.NoDataFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/fixed-deposit")
@@ -17,7 +19,9 @@ import java.util.List;
 @CrossOrigin("http://localhost:5173")
 public class FixedDepositController {
 
-    private FixedDepositService fixedDepositService;
+    private final FixedDepositService fixedDepositService;
+
+    private final FixedDepositStatementService fixedDepositStatementService;
 
     @GetMapping("/all")
     public ResponseEntity<FixedDepositSearchDTO> getAllFixedDeposits(@RequestHeader() String token) {
@@ -47,5 +51,14 @@ public class FixedDepositController {
     public ResponseEntity<?> updateFixedDeposit(@NotNull @RequestBody FixedDepositDTO fixedDepositDTO) {
         fixedDepositService.updateFixedDeposit(fixedDepositDTO);
         return ResponseEntity.accepted().build();
+    }
+
+    @GetMapping("/{fd_uuid}/transaction")
+    public ResponseEntity<List<FixedDepositStatementDTO>> getAllTransactionDetails(@PathVariable("fd_uuid") UUID uuid) {
+        final List<FixedDepositStatementDTO> transactionDetails = fixedDepositStatementService.getTransactionDetails(uuid);
+        if (transactionDetails.isEmpty()) {
+            throw new NoDataFoundException("No fixed-deposit transaction found");
+        }
+        return ResponseEntity.ok(transactionDetails);
     }
 }

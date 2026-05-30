@@ -2,7 +2,9 @@ package org.arrow.bemywealth.portfolio.cashOfDeposit.mapper;
 
 import org.arrow.bemywealth.portfolio.cashOfDeposit.data.FixedDepositData;
 import org.arrow.bemywealth.portfolio.cashOfDeposit.dto.FixedDepositDTO;
+import org.arrow.bemywealth.portfolio.cashOfDeposit.dto.FixedDepositStatementDTO;
 import org.arrow.bemywealth.portfolio.cashOfDeposit.model.FixedDepositModel;
+import org.arrow.bemywealth.portfolio.cashOfDeposit.model.FixedDepositStatementModel;
 import org.arrow.bemywealth.portfolio.cashOfDeposit.util.CompoundingFrequency;
 import org.arrow.bemywealth.portfolio.cashOfDeposit.util.FinanceUtils;
 import org.mapstruct.Mapper;
@@ -41,5 +43,8 @@ public interface FixedDepositMapper {
         return FinanceUtils.calculateMaturity(fixedDepositDTO.principalAmount(), fixedDepositDTO.interestRate().doubleValue(),
                 Objects.requireNonNull(CompoundingFrequency.findByName(fixedDepositDTO.compoundingFrequency())).getFrequency(), fixedDepositDTO.openDate(), fixedDepositDTO.closeDate());
     }
+
+    FixedDepositStatementDTO  mapFixedDepositStatementDto(FixedDepositStatementModel fixedDepositStatementModel);
+
 }
 
