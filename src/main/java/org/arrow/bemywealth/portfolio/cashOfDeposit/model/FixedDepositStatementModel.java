@@ -23,9 +23,9 @@ public class FixedDepositStatementModel {
 
     private BigDecimal amount;
 
-    private BigDecimal taxAmount;
-
     private LocalDate transactionDate;
 
     private LocalDate updateDate;
+
+    private String comment;
 }

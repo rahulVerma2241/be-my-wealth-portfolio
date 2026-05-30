@@ -53,8 +53,8 @@ public class FixedDepositController {
         return ResponseEntity.accepted().build();
     }
 
-    @GetMapping("/{fd_uuid}/transaction")
-    public ResponseEntity<List<FixedDepositStatementDTO>> getAllTransactionDetails(@PathVariable("fd_uuid") UUID uuid) {
+    @GetMapping("/{uuid}/transactions")
+    public ResponseEntity<List<FixedDepositStatementDTO>> getAllTransactionDetails(@PathVariable("uuid") UUID uuid) {
         final List<FixedDepositStatementDTO> transactionDetails = fixedDepositStatementService.getTransactionDetails(uuid);
         if (transactionDetails.isEmpty()) {
             throw new NoDataFoundException("No fixed-deposit transaction found");

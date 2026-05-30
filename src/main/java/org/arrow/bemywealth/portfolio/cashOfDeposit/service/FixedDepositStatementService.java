@@ -7,6 +7,7 @@ import org.arrow.bemywealth.portfolio.cashOfDeposit.dto.FixedDepositStatementDTO
 import org.arrow.bemywealth.portfolio.cashOfDeposit.mapper.FixedDepositMapper;
 import org.arrow.bemywealth.portfolio.cashOfDeposit.model.FixedDepositStatementModel;
 import org.arrow.bemywealth.portfolio.cashOfDeposit.repository.FixedDepositStatementRepository;
+import org.arrow.bemywealth.portfolio.exception.NoDataFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,9 @@ public class FixedDepositStatementService {
 
     public List<FixedDepositStatementDTO> getTransactionDetails(@NotBlank @NotNull UUID uuid) {
         final List<FixedDepositStatementModel> statements = statementRepository.findByFixedDepositId(uuid);
-
+        if  (statements.isEmpty()) {
+            throw new NoDataFoundException("No fixed-deposit transaction found");
+        }
         return statements.stream().map(FixedDepositMapper.INSTANCE::mapFixedDepositStatementDto).toList();
     }
 }

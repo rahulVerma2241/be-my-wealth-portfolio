@@ -5,10 +5,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public record FixedDepositStatementDTO ( Long id,
-         UUID fixedDepositId,
-         Expense expense,
-         BigDecimal amount,
-         BigDecimal taxAmount,
-         LocalDate transactionDate,
-         LocalDate updateDate) { }
+public record FixedDepositStatementDTO ( Long id, UUID fixedDepositId,
+         Expense expense, BigDecimal amount, LocalDate transactionDate,
+         LocalDate updateDate, String comment) { }
