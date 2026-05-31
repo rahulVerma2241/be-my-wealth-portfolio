@@ -46,5 +46,6 @@ public interface FixedDepositMapper {
 
     FixedDepositStatementDTO  mapFixedDepositStatementDto(FixedDepositStatementModel fixedDepositStatementModel);
 
+    FixedDepositStatementModel mapFixedDepositStatementModel(FixedDepositStatementDTO fixedDepositStatementDto);
 }
 
