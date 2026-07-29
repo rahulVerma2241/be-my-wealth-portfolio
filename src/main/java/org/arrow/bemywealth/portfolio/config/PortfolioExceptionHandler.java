@@ -2,7 +2,7 @@ package org.arrow.bemywealth.portfolio.config;
 
 import org.apache.coyote.BadRequestException;
 import org.arrow.bemywealth.portfolio.exception.NoDataFoundException;
-import org.arrow.bemywealth.portfolio.model.ErrorModel;
+import org.arrow.bemywealth.portfolio.common.model.ErrorModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

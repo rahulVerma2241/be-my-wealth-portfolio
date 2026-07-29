@@ -27,3 +27,18 @@ create table "fixed-deposit-statement"
     fixed_deposit_id uuid,
     comment          varchar(255)
 );
+
+create table address
+(
+    id           uuid         not null
+        primary key,
+    floor_number varchar(100),
+    tower_number varchar(100),
+    street       varchar(100) not null,
+    city         varchar(50)  not null,
+    state        varchar(50),
+    postal_code  varchar(20),
+    country      varchar(50)  not null
+);
+
+ALTER TABLE "address" alter column id set default gen_random_uuid();

@@ -2,9 +2,9 @@ spring:
   application:
     name: be-my-wealth-portfolio
   datasource:
-    url: jdbc:postgresql://localhost:5430/wealthmanagement
-    username: postgres
-    password: admin123
+    url: jdbc:postgresql://localhost:5430/mydatabase
+    username: admin
+    password: secret
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

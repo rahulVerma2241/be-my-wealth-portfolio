@@ -14,6 +14,7 @@ public class SwaggerConfig {
         return new OpenAPI().
                 info(new Info().title("Wealth Manager API")
                         .version("v1")
-                .description("Wealth Manager API"));
+                        .description("This API will save all the data for wealth manager data")
+                        .title("Wealth Manager API"));
     }
 }
